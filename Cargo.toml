@@ -1,0 +1,35 @@
+[package]
+name          = "javawithrust"
+version       = "0.1.0"
+authors       = ["Totobird Creations"]
+edition       = "2021"
+description   = "Transfer function calls between Rust and Java in a rust-like (ish) way."
+license       = "MIT"
+keywords      = ["java", "shared-library", "library", "dynamic-library", "ffi"]
+categories    = ["development-tools::ffi"]
+
+documentation = "https://docs.rs/javawithrust"
+readme        = "README.md"
+homepage      = "https://crates.io/crates/javawithrust"
+repository    = "https://github.com/Totobird-Creations/JavaWithRust-Lib"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [
+    "javawithrust_macro"
+]
+
+[dependencies.javawithrust_macro]
+path = "./javawithrust_macro"
+
+[dependencies]
+j4rs        = "0.13"
+j4rs_derive = "0.1"
+paste       = "1.0"
+
+[dependencies.serde]
+version  = "1.0"
+features = [
+    "derive"
+]
