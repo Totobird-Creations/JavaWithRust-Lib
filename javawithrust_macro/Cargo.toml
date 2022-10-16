@@ -1,13 +1,20 @@
 [package]
-name = "javawithrust_macro"
-version = "0.1.0"
-edition = "2021"
+name          = "javawithrust_macro"
+version       = "0.1.0"
+authors       = ["Totobird Creations"]
+edition       = "2021"
+description   = "Transfer function calls between Rust and Java in a rust-like (ish) way."
+license       = "MIT"
+keywords      = ["java", "shared-library", "library", "dynamic-library", "ffi"]
+categories    = ["development-tools::ffi"]
+
+documentation = "https://docs.rs/javawithrust"
+readme        = "README.md"
+homepage      = "https://crates.io/crates/javawithrust"
+repository    = "https://github.com/Totobird-Creations/JavaWithRust-Lib"
 
 [lib]
 proc-macro = true
-
-[dependencies]
-quote = "1.0"
 
 [dependencies.syn]
 version  = "1.0"
