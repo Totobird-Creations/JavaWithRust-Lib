@@ -9,7 +9,6 @@ keywords      = ["java", "shared-library", "library", "dynamic-library", "ffi"]
 categories    = ["development-tools::ffi"]
 
 documentation = "https://docs.rs/javawithrust"
-readme        = "README.md"
 homepage      = "https://crates.io/crates/javawithrust"
 repository    = "https://github.com/Totobird-Creations/JavaWithRust-Lib"
 
