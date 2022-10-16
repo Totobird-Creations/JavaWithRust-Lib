@@ -21,7 +21,8 @@ members = [
 ]
 
 [dependencies.javawithrust_macro]
-path = "./javawithrust_macro"
+path    = "./javawithrust_macro"
+version = "*"
 
 [dependencies]
 j4rs        = "0.13"
