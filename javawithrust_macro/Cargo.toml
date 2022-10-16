@@ -21,3 +21,6 @@ version  = "1.0"
 features = [
     "full"
 ]
+
+[dependencies]
+quote = "1.0"
