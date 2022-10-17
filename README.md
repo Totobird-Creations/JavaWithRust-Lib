@@ -16,14 +16,6 @@ Transfer function calls between Rust and Java in a rust-like (ish) way.
 
 * Can not call java methods from rust.
 * Can not call rust methods from java.
-* Can only convert the following rust types to java objects:
-    * `String`
-    * `i8`
-    * `i16`
-    * `i32`
-    * `i64`
-    * `f32`
-    * `f64`
 
 ## Setup
 
@@ -106,6 +98,42 @@ impl CustomRustStruct {
 package io.example;
 
 import org.astonbitecode.j4rs.api.Instance;
+import org.astonbitecode.j4rs.api.dtos.InvocationArg;
+import org.astonbitecode.j4rs.api.java2rust.Java2RustUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class ConvHelper {
+
+    public static <T> Instance<T> j2rs(T from) {
+        return Java2RustUtils.createInstance(from);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T rs2j(Instance<T> from) {
+        if (from instanceof InvocationArg) {
+            InvocationArg from_ia = ((InvocationArg)from);
+            if (from_ia.isSerialized()) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    return mapper.<T>readValue(from_ia.getJson(), (Class<T>)(Class.forName(from_ia.getClassName())));
+                } catch (JsonProcessingException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+            }
+        }
+        return Java2RustUtils.getObjectCasted(from);
+    }
+
+}
+```
+```java
+// Java
+
+package io.example;
+
+import org.astonbitecode.j4rs.api.Instance;
 import org.astonbitecode.j4rs.api.java2rust.Java2RustUtils;
 
 public class CustomJavaClass
@@ -133,9 +161,9 @@ public class CustomJavaClass
     private static native Instance<Integer> sum(Instance<Integer> i1, Instance<Integer> i2);
     public static Integer sumFromRust(Integer a, Integer b) {
         // Convert the objects.
-        return Java2RustUtils.getObjectCasted(J2RS.sum(
-            Java2RustUtils.createInstance(a),
-            Java2RustUtils.createInstance(b)
+        return ConvHelper.rs2j(J2RS.sum(
+            ConvHelper.j2rs(a),
+            ConvHelper.j2rs(b)
         ));
     }
 

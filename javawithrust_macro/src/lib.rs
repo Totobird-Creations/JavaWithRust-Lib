@@ -301,6 +301,12 @@ pub fn jclass(attr : TokenStream, item : TokenStream) -> TokenStream {
             }
             use [<__jwrs_classname_ #struct_name>];
         }
+        impl TryFrom<#struct_name> for ::javawithrust::prelude::InvocationArg {
+            type Error = ::javawithrust::prelude::errors::J4RsError;
+            fn try_from(arg : #struct_name) -> ::javawithrust::prelude::errors::Result<::javawithrust::prelude::InvocationArg> {
+                return Ok(::javawithrust::prelude::InvocationArg::new(&arg, #class_name));
+            }
+        }
 
     }.into());
     return item2.into();
